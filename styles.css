@@ -271,6 +271,11 @@ textarea:focus {
 
 .segmented-control input {
   position: absolute;
+  width: 1px;
+  min-height: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
   opacity: 0;
   pointer-events: none;
 }
