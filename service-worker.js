@@ -2,9 +2,9 @@ const CACHE_NAME = "girl-food-v2";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css",
-  "./app.js",
-  "./manifest.webmanifest",
+  "./styles.css?v=20260707-3",
+  "./app.js?v=20260707-3",
+  "./manifest.webmanifest?v=20260707-3",
   "./icons/icon-192.svg",
   "./icons/icon-512.svg",
 ];
