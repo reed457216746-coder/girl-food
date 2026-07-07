@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f8faf7" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="家里吃更香" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>家里吃更香</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>家里吃更香</h1>
+          <p id="todayText">重庆外食记录</p>
+        </div>
+        <button class="icon-button" id="backupTopButton" type="button" aria-label="打开备份">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v10m0-10 4 4m-4-4-4 4" />
+            <path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" />
+          </svg>
+        </button>
+      </header>
+
+      <main>
+        <section class="hero-panel">
+          <div class="hero-copy">
+            <p>本周外食</p>
+            <strong id="weekCount">0 顿</strong>
+            <span id="weekSpend">¥0</span>
+          </div>
+          <div class="saving-meter" aria-label="预计可省">
+            <div class="meter-ring">
+              <span id="savePercent">0%</span>
+            </div>
+            <p>预计可省</p>
+            <strong id="saveAmount">¥0</strong>
+          </div>
+        </section>
+
+        <section class="metric-grid" aria-label="统计摘要">
+          <article>
+            <span>本月花费</span>
+            <strong id="monthSpend">¥0</strong>
+          </article>
+          <article>
+            <span>重口味占比</span>
+            <strong id="heavyRatio">0%</strong>
+          </article>
+          <article>
+            <span>外卖次数</span>
+            <strong id="takeoutCount">0</strong>
+          </article>
+          <article>
+            <span>最高一顿</span>
+            <strong id="maxMeal">¥0</strong>
+          </article>
+        </section>
+
+        <section class="section-block record-block" id="recordSection">
+          <div class="section-title">
+            <h2 id="formTitle">记一顿</h2>
+            <button class="text-button" id="resetFormButton" type="button">清空</button>
+          </div>
+
+          <form id="mealForm" autocomplete="off">
+            <input type="hidden" id="editingId" />
+            <div class="form-grid">
+              <label>
+                日期
+                <input id="mealDate" type="date" required />
+              </label>
+              <label>
+                花费
+                <input id="mealCost" type="number" min="0" inputmode="decimal" placeholder="88" required />
+              </label>
+            </div>
+
+            <label>
+              吃了什么
+              <select id="mealType" required>
+                <option value="火锅">火锅</option>
+                <option value="串串">串串</option>
+                <option value="小面">小面</option>
+                <option value="江湖菜">江湖菜</option>
+                <option value="烧烤">烧烤</option>
+                <option value="烤鱼">烤鱼</option>
+                <option value="冒菜">冒菜</option>
+                <option value="外卖">外卖</option>
+                <option value="奶茶甜品">奶茶甜品</option>
+                <option value="其他">其他</option>
+              </select>
+            </label>
+
+            <label>
+              餐厅 / 地点
+              <input id="mealPlace" type="text" placeholder="比如 楠火锅、楼下小面" />
+            </label>
+
+            <div class="form-grid">
+              <label>
+                辣度
+                <select id="mealSpicy">
+                  <option value="不辣">不辣</option>
+                  <option value="微辣">微辣</option>
+                  <option value="中辣">中辣</option>
+                  <option value="重辣">重辣</option>
+                  <option value="爆辣">爆辣</option>
+                </select>
+              </label>
+              <label>
+                口味
+                <select id="mealFlavor">
+                  <option value="清淡">清淡</option>
+                  <option value="正常">正常</option>
+                  <option value="重口">重口</option>
+                  <option value="超重口">超重口</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="segmented-control" role="group" aria-label="用餐方式">
+              <input id="dineIn" name="mealMode" type="radio" value="堂食" checked />
+              <label for="dineIn">堂食</label>
+              <input id="takeout" name="mealMode" type="radio" value="外卖" />
+              <label for="takeout">外卖</label>
+            </div>
+
+            <label>
+              备注
+              <textarea id="mealNote" rows="2" placeholder="比如 太油了、她很喜欢、下次在家复刻"></textarea>
+            </label>
+
+            <button class="primary-button" type="submit">保存这一顿</button>
+          </form>
+        </section>
+
+        <section class="section-block">
+          <div class="section-title">
+            <h2>统计分析</h2>
+            <div class="period-tabs" role="tablist" aria-label="统计周期">
+              <button class="active" data-period="week" type="button">周</button>
+              <button data-period="month" type="button">月</button>
+            </div>
+          </div>
+          <div class="analysis-card">
+            <div class="analysis-row">
+              <span>花费</span>
+              <div class="bar-track"><div id="costBar" class="bar-fill green"></div></div>
+              <strong id="periodCost">¥0</strong>
+            </div>
+            <div class="analysis-row">
+              <span>重口味</span>
+              <div class="bar-track"><div id="heavyBar" class="bar-fill red"></div></div>
+              <strong id="periodHeavy">0%</strong>
+            </div>
+            <div class="analysis-row">
+              <span>在家机会</span>
+              <div class="bar-track"><div id="homeBar" class="bar-fill yellow"></div></div>
+              <strong id="periodSave">¥0</strong>
+            </div>
+          </div>
+          <div class="tag-cloud" id="tagCloud"></div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-title">
+            <h2>最近外食</h2>
+            <button class="text-button" id="exportCsvButton" type="button">CSV</button>
+          </div>
+          <div class="meal-list" id="mealList"></div>
+        </section>
+
+        <section class="section-block backup-block" id="backupSection">
+          <div class="section-title">
+            <h2>备份</h2>
+            <span id="backupStatus">本地保存</span>
+          </div>
+          <p>数据只存在这台手机的浏览器里。建议每周导出一次 JSON，换手机或清缓存前先备份。</p>
+          <div class="backup-actions">
+            <button class="secondary-button" id="exportJsonButton" type="button">导出备份</button>
+            <label class="secondary-button file-button">
+              导入备份
+              <input id="importJsonInput" type="file" accept="application/json" />
+            </label>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="快捷操作">
+        <button id="navStats" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19V5" />
+            <path d="M8 19v-7" />
+            <path d="M13 19V8" />
+            <path d="M18 19v-4" />
+          </svg>
+          统计
+        </button>
+        <button class="quick-add" id="quickAddButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          记一顿
+        </button>
+        <button id="navBackup" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v10m0-10 4 4m-4-4-4 4" />
+            <path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" />
+          </svg>
+          备份
+        </button>
+      </nav>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
