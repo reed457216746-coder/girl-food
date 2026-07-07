@@ -272,12 +272,18 @@ textarea:focus {
 .segmented-control input {
   position: absolute;
   width: 1px;
+  max-width: 1px;
+  inline-size: 1px;
   min-height: 0;
   height: 1px;
+  block-size: 1px;
   margin: -1px;
+  padding: 0;
+  border: 0;
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+  appearance: none;
 }
 
 .segmented-control label {
